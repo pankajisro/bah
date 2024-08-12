@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/openlayers@4.6.5/dist/ol.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/openlayers@4.6.5/dist/ol.min.css">
     <title>OpenLayers Layer Toggle</title>
     <style>
         #map {
@@ -24,7 +24,6 @@
     </style>
     <!-- Using OpenLayers v5.3.0 from the official CDN -->
     <script src="https://cdn.jsdelivr.net/npm/openlayers@4.6.5/dist/ol.min.js"></script>
-
 </head>
 <body>
     <div id="map" class="map"></div>
@@ -67,6 +66,7 @@
                     layerParams: {
                         LAYERS: "vedas:INDIA_NHROADS",
                         VERSION: version,
+                        CRS: "EPSG:4326",
                     },
                     format: "image/png",
                 },
@@ -84,6 +84,7 @@
                     layerParams: {
                         LAYERS: "vedas:INDIA_RLWY_TRACKS",
                         VERSION: version,
+                        CRS: "EPSG:4326",
                     },
                     format: "image/png",
                 },
@@ -101,6 +102,7 @@
                     layerParams: {
                         LAYERS: "vedas:INDIA_RLWY_STATIONS",
                         VERSION: version,
+                        CRS: "EPSG:4326",
                     },
                     format: "image/png",
                 },
@@ -118,6 +120,7 @@
                     layerParams: {
                         LAYERS: "vedas:INDIA_AIRPORTS",
                         VERSION: version,
+                        CRS: "EPSG:4326",
                     },
                     format: "image/png",
                 },
@@ -166,7 +169,6 @@
         var map = new ol.Map({
             target: 'map',
             layers: [
-                
                 layers.national_highway,
                 layers.railway_tracks,
                 layers.railway_stations,
@@ -174,7 +176,8 @@
                 layers.awifs_fcc,
             ],
             view: new ol.View({
-                center: ol.proj.fromLonLat([78.9629, 20.5937]), // Centered on India
+                projection: 'EPSG:4326',
+                center: [78.9629, 20.5937], // Centered on India in EPSG:4326
                 zoom: 5,
             }),
         });
