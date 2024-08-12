@@ -166,13 +166,12 @@
         var map = new ol.Map({
             target: 'map',
             layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM(),
-                }),
+                
                 layers.national_highway,
                 layers.railway_tracks,
                 layers.railway_stations,
-                layers.airports
+                layers.airports,
+                layers.awifs_fcc,
             ],
             view: new ol.View({
                 center: ol.proj.fromLonLat([78.9629, 20.5937]), // Centered on India
