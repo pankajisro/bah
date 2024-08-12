@@ -21,7 +21,8 @@
             margin-right: 5px;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/ol"></script>
+    <!-- Using OpenLayers v5.3.0 from the official CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/5.3.0/ol.js"></script>
 </head>
 <body>
     <div id="map" class="map"></div>
@@ -45,9 +46,11 @@
     </div>
 
     <script>
-        const version = "1.1.1"; // Set the version you want
+        // Version of WMS to use
+        var version = "1.1.1";
 
-        const layersConfig = {
+        // Layer configurations
+        var layersConfig = {
             national_highway: {
                 displayName: "National Highway",
                 id: "national_highway",
@@ -59,7 +62,7 @@
                         LAYERS: "vedas:INDIA_NHROADS",
                         VERSION: version,
                     },
-                    format: "png",
+                    format: "image/png",
                 },
                 layer: "",
                 zIndex: 0,
@@ -76,7 +79,7 @@
                         LAYERS: "vedas:INDIA_RLWY_TRACKS",
                         VERSION: version,
                     },
-                    format: "png",
+                    format: "image/png",
                 },
                 layer: "",
                 zIndex: 0,
@@ -93,7 +96,7 @@
                         LAYERS: "vedas:INDIA_RLWY_STATIONS",
                         VERSION: version,
                     },
-                    format: "png",
+                    format: "image/png",
                 },
                 layer: "",
                 zIndex: 0,
@@ -110,7 +113,7 @@
                         LAYERS: "vedas:INDIA_AIRPORTS",
                         VERSION: version,
                     },
-                    format: "png",
+                    format: "image/png",
                 },
                 layer: "",
                 zIndex: 0,
@@ -118,10 +121,11 @@
             },
         };
 
-        const layers = {};
+        // Creating OpenLayers map
+        var layers = {};
 
-        for (const key in layersConfig) {
-            const config = layersConfig[key];
+        for (var key in layersConfig) {
+            var config = layersConfig[key];
             layers[key] = new ol.layer.Image({
                 source: new ol.source.ImageWMS({
                     url: config.layerFactoryParams.urlTemplate,
@@ -133,13 +137,16 @@
             });
         }
 
-        const map = new ol.Map({
+        var map = new ol.Map({
             target: 'map',
             layers: [
                 new ol.layer.Tile({
                     source: new ol.source.OSM(),
                 }),
-                ...Object.values(layers)
+                layers.national_highway,
+                layers.railway_tracks,
+                layers.railway_stations,
+                layers.airports
             ],
             view: new ol.View({
                 center: ol.proj.fromLonLat([78.9629, 20.5937]), // Centered on India
@@ -147,9 +154,10 @@
             }),
         });
 
-        document.querySelectorAll('.layer-toggle input').forEach(input => {
+        // Toggle visibility of layers
+        document.querySelectorAll('.layer-toggle input').forEach(function(input) {
             input.addEventListener('change', function() {
-                const layerKey = this.id;
+                var layerKey = this.id;
                 layers[layerKey].setVisible(this.checked);
             });
         });
