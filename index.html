@@ -43,11 +43,11 @@
         <div>
             <input type="checkbox" id="airports" checked>
             <label for="airports">Airports</label>
-        </div> <!--
+        </div> 
         <div>
             <input type="checkbox" id="awifs_fcc" checked>
             <label for="awifs_fcc">AWiFS FCC</label>
-        </div> -->
+        </div> 
     </div>
 
     <script>
@@ -155,11 +155,11 @@
 
         for (var key in layersConfig) {
             var config = layersConfig[key];
-            layers[key] = new ol.layer.Image({
-                source: new ol.source.ImageWMS({
+            layers[key] = new ol.layer.Tile({
+                source: new ol.source.TileWMS({
+                    projection: 'EPSG:4326',
                     url: config.layerFactoryParams.urlTemplate,
-                    params: config.layerFactoryParams.layerParams,
-                    serverType: 'geoserver',
+                    params: config.layerFactoryParams.layerParams
                 }),
                 visible: config.isShow,
                 zIndex: config.baseIndex,
